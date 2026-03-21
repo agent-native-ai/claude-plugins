@@ -1,0 +1,39 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agent-native",
+  "description": "Agent Native社内のClaude Code品質ガードスキル",
+  "owner": {
+    "name": "Agent Native",
+    "email": "yuki@agent-native.ai"
+  },
+  "plugins": [
+    {
+      "name": "security-audit",
+      "source": "./plugins/security-audit",
+      "description": "3段階セキュリティ監査（パターンスキャン + 依存関係 + AI攻撃者分析）",
+      "version": "1.0.0",
+      "category": "security"
+    },
+    {
+      "name": "auto-test",
+      "source": "./plugins/auto-test",
+      "description": "テストフレームワーク自動検知・実行",
+      "version": "1.0.0",
+      "category": "development"
+    },
+    {
+      "name": "pre-check",
+      "source": "./plugins/pre-check",
+      "description": "タスク開始前の影響範囲・品質基準・過去インシデント洗い出し",
+      "version": "1.0.0",
+      "category": "development"
+    },
+    {
+      "name": "quality-rules",
+      "source": "./plugins/quality-rules",
+      "description": "実装中の品質基準参照・自動適用",
+      "version": "1.0.0",
+      "category": "development"
+    }
+  ]
+}

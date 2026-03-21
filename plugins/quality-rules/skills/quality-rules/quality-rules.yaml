@@ -1,0 +1,99 @@
+# Zero Leak Quality Rules DB
+# L2（主防御）が参照する品質基準
+# L5（leak-learner）が自動でルールを追加する
+# 衝突時: Client lessons > Skill lessons > Global rules
+# 例外: security / hardcode カテゴリは常に最優先（上書き不可）
+
+version: 1
+updated: 2026-03-21
+source: agent-native-plugin-marketplace
+max_rules: 50  # 超過時は6ヶ月違反ゼロのルールをアーカイブ
+
+code:
+  hardcode:
+    - id: HC001
+      rule: "URL文字列はconfig/env経由のみ。コード内にhttp(s)://を直書きしない"
+      added: 2026-03-20
+    - id: HC002
+      rule: "メールアドレスはconfig/env経由のみ"
+      added: 2026-03-20
+    - id: HC003
+      rule: "Slack channel ID / user IDはconfig/env経由のみ"
+      added: 2026-03-20
+    - id: HC004
+      rule: "ポート番号・タイムアウト値は名前付き定数で定義"
+      added: 2026-03-20
+    - id: HC005
+      rule: "APIキー・トークンはSecret Manager or env。フォールバック値禁止"
+      added: 2026-03-20
+
+  schema:
+    - id: SC001
+      rule: "API呼び出しのリクエスト/レスポンス型がスキーマ定義と一致すること"
+      added: 2026-03-20
+    - id: SC002
+      rule: "新しい環境変数を追加したら.env.exampleにも追記"
+      added: 2026-03-20
+
+  deploy:
+    - id: DP001
+      rule: "デプロイ後にE2Eフローの主要パスを実行して動作確認"
+      added: 2026-03-20
+    - id: DP002
+      rule: "エラーログを確認してから完了報告"
+      added: 2026-03-20
+
+  regression:
+    - id: RG001
+      rule: "修正したパターンでGrep → 他の箇所に同じ問題がないか全量確認"
+      added: 2026-03-20
+    - id: RG002
+      rule: "過去のINCIDENT_REPORT_*.mdのパターンに該当しないか確認"
+      added: 2026-03-20
+
+design:
+  typography:
+    - id: TY001
+      rule: "最小フォントサイズ18px。これ未満は禁止"
+      added: 2026-03-20
+    - id: TY002
+      rule: "見出し階層: h1 > h2 > h3 のサイズ順を維持"
+      added: 2026-03-20
+
+  color:
+    - id: CL001
+      rule: "ブランドデザインシステムのパレットのみ使用"
+      added: 2026-03-20
+    - id: CL002
+      rule: "使用色は3色以内"
+      added: 2026-03-20
+
+  layout:
+    - id: LY001
+      rule: "テキストがoverflow/clipで切れない"
+      added: 2026-03-20
+    - id: LY002
+      rule: "参考資料が指定された場合、フォントサイズ・余白・色を数値レベルで模倣"
+      added: 2026-03-20
+
+  content:
+    - id: CT001
+      rule: "抽象的すぎる説明は禁止。具体的な業務シーンか数字で伝える"
+      added: 2026-03-20
+
+process:
+  reporting:
+    - id: RP001
+      rule: "エラー報告は「症状→原因→影響範囲→対応」の順"
+      added: 2026-03-20
+    - id: RP002
+      rule: "完了報告前にtest -f / lsで成果物の実在を確認"
+      added: 2026-03-20
+
+  meta:
+    - id: MT001
+      rule: "task tracking systemをコミットと同時に更新"
+      added: 2026-03-20
+    - id: MT002
+      rule: "SSOT（MVV, Brand等）の変更は即時反映"
+      added: 2026-03-20
