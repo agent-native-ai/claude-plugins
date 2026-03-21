@@ -1,7 +1,8 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "agent-native",
-  "description": "Agent Native社内のClaude Code品質ガードスキル",
+  "description": "Claude Code品質ガード・設計・実装・学習スキル",
+  "version": "2.0.0",
   "owner": {
     "name": "Agent Native",
     "email": "yuki@agent-native.ai"
@@ -34,6 +35,69 @@
       "description": "実装中の品質基準参照・自動適用",
       "version": "1.0.0",
       "category": "development"
+    },
+    {
+      "name": "super-plan",
+      "source": "./plugins/super-plan",
+      "description": "エビデンスベースの設計書作成（スコープ定義・ペルソナ・内部/外部リサーチ・承認ゲート）",
+      "version": "1.0.0",
+      "category": "planning"
+    },
+    {
+      "name": "rapid-build",
+      "source": "./plugins/rapid-build",
+      "description": "承認済み設計書をベースラインコード再利用・config-first・品質ゲート付きで実行",
+      "version": "1.0.0",
+      "category": "development"
+    },
+    {
+      "name": "neo-skill-creator",
+      "source": "./plugins/neo-skill-creator",
+      "description": "Q1-Q10品質基準を満たすClaude Codeスキルを作成",
+      "version": "1.0.0",
+      "category": "meta"
+    },
+    {
+      "name": "multi-agent",
+      "source": "./plugins/multi-agent",
+      "description": "大規模タスクをAgent Teamsで並列実行（設計・spawn・Delegate Mode監視）",
+      "version": "1.0.0",
+      "category": "development"
+    },
+    {
+      "name": "meeting-prep",
+      "source": "./plugins/meeting-prep",
+      "description": "面談・MTG前の候補者ブリーフィング / クライアントMTGアジェンダ自動生成",
+      "version": "1.0.0",
+      "category": "operations"
+    },
+    {
+      "name": "incident-triage-lite",
+      "source": "./plugins/incident-triage-lite",
+      "description": "インシデントログ作成 + 過去の類似インシデント検索の軽量トリアージ",
+      "version": "1.0.0",
+      "category": "operations"
+    },
+    {
+      "name": "frontend-slides",
+      "source": "./plugins/frontend-slides",
+      "description": "ゼロ依存・アニメーション付きHTMLプレゼンテーション生成（12スタイルプリセット + PPT変換）",
+      "version": "1.0.0",
+      "category": "design"
+    },
+    {
+      "name": "presentation-architect",
+      "source": "./plugins/presentation-architect",
+      "description": "会社説明資料・提案書・ピッチデッキのオーケストレーター（ブランド自動設計対応）",
+      "version": "1.0.0",
+      "category": "design"
+    },
+    {
+      "name": "leak-learner",
+      "source": "./plugins/leak-learner",
+      "description": "レビュアー指摘を半自動で学習し品質ルールに還流（hook記録→候補生成→承認→反映）",
+      "version": "1.0.0",
+      "category": "meta"
     }
   ]
 }
