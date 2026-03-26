@@ -4,58 +4,37 @@ Claude Code用の品質ガード・設計・実装スキル集。
 
 ---
 
-## クイックスタート（3ステップ）
-
-### Step 1: クローン
+## インストール（ワンライナー）
 
 ```bash
-git clone git@github.com:agent-native-ai/claude-plugins.git
+curl -fsSL https://raw.githubusercontent.com/agent-native-ai/claude-plugins/main/install.sh | bash
 ```
 
-### Step 2: スキルをコピー
+これだけ。更新時も同じコマンドを再実行するだけ。
 
-使いたいスキルを `~/.claude/skills/` にコピー。全部入れてOK。
+---
+
+## 手動インストール
 
 ```bash
+git clone https://github.com/agent-native-ai/claude-plugins.git
+cd claude-plugins/plugins
 mkdir -p ~/.claude/skills
-
-# 全スキル一括コピー
-for skill in plugins/*/; do
+for skill in */skills/*/; do
+  name=$(basename "$skill")
   cp -r "$skill" ~/.claude/skills/
 done
 ```
 
-または個別に:
+---
 
-```bash
-cp -r plugins/super-plan ~/.claude/skills/
-cp -r plugins/rapid-build ~/.claude/skills/
-cp -r plugins/quality-rules ~/.claude/skills/
-cp -r plugins/security-audit ~/.claude/skills/
-```
-
-### Step 3: 確認
-
-Claude Code を起動して、スキルが認識されているか確認。
+## 確認
 
 ```bash
 claude
 ```
 
 起動後に `/super-plan` と入力して発動すればOK。
-
----
-
-## 更新時
-
-```bash
-cd claude-plugins && git pull
-
-# 全スキル再コピー
-for skill in plugins/*/; do
-  cp -r "$skill" ~/.claude/skills/
-done
-```
 
 ---
 
@@ -110,4 +89,4 @@ done
 
 - **`claude install` は使わない** — CLI本体のバージョン更新コマンドであり、スキルインストール機能ではありません
 - スキルは `~/.claude/skills/` にファイルを置くだけで動きます
-- このリポはPrivateです。アクセス権がない場合は管理者に連絡してください
+- アンインストール: `rm -rf ~/.claude/skills/{skill-name}`
