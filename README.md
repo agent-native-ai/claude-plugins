@@ -1,6 +1,6 @@
 # Agent Native Claude Code Plugins
 
-Claude Codeの設計・実装ワークフローを強化するスキルパック。
+Claude Codeの設計・実装・セキュリティワークフローを強化するスキルパック。
 
 ---
 
@@ -10,11 +10,41 @@ Claude Codeの設計・実装ワークフローを強化するスキルパック
 curl -fsSL https://raw.githubusercontent.com/agent-native-ai/claude-plugins/main/install.sh | bash
 ```
 
-更新時も同じコマンドを再実行するだけ。
+11スキルが一括インストールされます。更新時も同じコマンドを再実行するだけ。
 
 ---
 
-## スキル一覧（6種）
+## 全体像
+
+```
+                        ┌─────────────────────────────────────┐
+                        │           ワークフロー                │
+                        │                                     │
+  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐  │
+  │pre-check │ → │super-plan│ → │rapid-build│ → │auto-test │  │
+  │(リスク)   │   │(設計)     │   │(実装)     │   │(テスト)   │  │
+  └──────────┘   └──────────┘   └──────────┘   └──────────┘  │
+                                     ↑               ↓       │
+                              quality-rules    security-audit │
+                              (実装中ずっと)    (最終監査)      │
+                        └─────────────────────┼───────────────┘
+                                              │
+                        ┌─────────────────────┼───────────────┐
+                        │  security-audit が自動連携（DELEGATE） │
+                        │                                     │
+                        │  audit-context-building  Phase 0    │
+                        │  insecure-defaults       Phase 1    │
+                        │  sharp-edges             Phase 1    │
+                        │  semgrep                 Phase 2    │
+                        │  codeql                  Phase 2    │
+                        └─────────────────────────────────────┘
+```
+
+---
+
+## スキル一覧（11種）
+
+### Core Skills（6種）
 
 | スキル | 役割 | コマンド |
 |--------|------|---------|
@@ -25,46 +55,17 @@ curl -fsSL https://raw.githubusercontent.com/agent-native-ai/claude-plugins/main
 | security-audit | セキュリティ監査（3段階） | `/security-audit` |
 | auto-test | テスト自動検知・実行 | `/auto-test` |
 
-### ワークフロー
+### Security Extension Skills（5種）
 
-```
-pre-check → super-plan → rapid-build → auto-test → security-audit
-  (リスク)    (設計)       (実装)       (テスト)     (監査)
-                            ↑
-                      quality-rules（実装中ずっと適用）
-```
+`security-audit` が自動的に呼び出して精度を向上させるスキル。
 
----
-
-## セキュリティスキルの拡張（オプション）
-
-`security-audit` は単体でも動作しますが、以下のスキルがインストールされていると自動連携して精度が向上します。
-
-### インストール方法
-
-これらはAnthropicが提供するユーザーレベルスキルです。Claude Code内で以下を実行:
-
-```
-/install-skill audit-context-building
-/install-skill insecure-defaults
-/install-skill sharp-edges
-/install-skill semgrep
-/install-skill codeql
-```
-
-> `/install-skill` が使えない場合は、[Anthropic Skills Marketplace](https://github.com/anthropics/claude-code-skills) から手動でインストールしてください。
-
-### 連携スキル一覧
-
-| スキル | 連携先 | 効果 |
-|--------|--------|------|
+| スキル | 連携フェーズ | 効果 |
+|--------|------------|------|
 | audit-context-building | Phase 0 | 行レベルのコード分析コンテキスト構築 |
 | insecure-defaults | Phase 1 | fail-open設定・ハードコードシークレット検出 |
 | sharp-edges | Phase 1 | 危険API・フットガン設計検出 |
-| semgrep | Phase 2 | 静的解析スキャン |
+| semgrep | Phase 2 | 静的解析スキャン（複数言語対応） |
 | codeql | Phase 2 | 汚染追跡・データフロー分析 |
-
-なくても `security-audit` は自前のパターンgrepで動作します。
 
 ---
 
@@ -81,7 +82,7 @@ claude
 ## アンインストール
 
 ```bash
-rm -rf ~/.claude/skills/{super-plan,rapid-build,quality-rules,pre-check,security-audit,auto-test}
+rm -rf ~/.claude/skills/{super-plan,rapid-build,quality-rules,pre-check,security-audit,auto-test,audit-context-building,insecure-defaults,sharp-edges,semgrep,codeql}
 ```
 
 ---
