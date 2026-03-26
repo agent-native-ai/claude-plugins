@@ -36,6 +36,38 @@ pre-check → super-plan → rapid-build → auto-test → security-audit
 
 ---
 
+## セキュリティスキルの拡張（オプション）
+
+`security-audit` は単体でも動作しますが、以下のスキルがインストールされていると自動連携して精度が向上します。
+
+### インストール方法
+
+これらはAnthropicが提供するユーザーレベルスキルです。Claude Code内で以下を実行:
+
+```
+/install-skill audit-context-building
+/install-skill insecure-defaults
+/install-skill sharp-edges
+/install-skill semgrep
+/install-skill codeql
+```
+
+> `/install-skill` が使えない場合は、[Anthropic Skills Marketplace](https://github.com/anthropics/claude-code-skills) から手動でインストールしてください。
+
+### 連携スキル一覧
+
+| スキル | 連携先 | 効果 |
+|--------|--------|------|
+| audit-context-building | Phase 0 | 行レベルのコード分析コンテキスト構築 |
+| insecure-defaults | Phase 1 | fail-open設定・ハードコードシークレット検出 |
+| sharp-edges | Phase 1 | 危険API・フットガン設計検出 |
+| semgrep | Phase 2 | 静的解析スキャン |
+| codeql | Phase 2 | 汚染追跡・データフロー分析 |
+
+なくても `security-audit` は自前のパターンgrepで動作します。
+
+---
+
 ## 確認
 
 ```bash
@@ -56,5 +88,6 @@ rm -rf ~/.claude/skills/{super-plan,rapid-build,quality-rules,pre-check,security
 
 ## 注意
 
-- `claude install` は使わない（CLI本体の更新コマンドであり、スキル用ではない）
+- **`claude install` は使わない** — CLI本体の更新コマンドであり、スキル用ではない
 - スキルは `~/.claude/skills/` にファイルを置くだけで動く
+- 更新: ワンライナーを再実行するだけ（上書きインストール）
