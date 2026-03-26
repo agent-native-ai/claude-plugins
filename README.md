@@ -25,12 +25,12 @@ curl -fsSL https://raw.githubusercontent.com/agent-native-ai/claude-plugins/main
   │(リスク)   │   │(設計)     │   │(実装)     │   │(テスト)   │  │
   └──────────┘   └──────────┘   └──────────┘   └──────────┘  │
                                      ↑               ↓       │
-                              quality-rules    security-audit │
+                              quality-rules    security-scan │
                               (実装中ずっと)    (最終監査)      │
                         └─────────────────────┼───────────────┘
                                               │
                         ┌─────────────────────┼───────────────┐
-                        │  security-audit が自動連携（DELEGATE） │
+                        │  security-scan が自動連携（DELEGATE） │
                         │                                     │
                         │  audit-context-building  Phase 0    │
                         │  insecure-defaults       Phase 1    │
@@ -52,12 +52,12 @@ curl -fsSL https://raw.githubusercontent.com/agent-native-ai/claude-plugins/main
 | rapid-build | 設計書→実装（品質ゲート付き） | `/rapid-build` |
 | quality-rules | 実装中の品質基準チェック | 自動適用 |
 | pre-check | 着手前のリスクスキャン | `/pre-check` |
-| security-audit | セキュリティ監査（3段階） | `/security-audit` |
+| security-scan | セキュリティ監査（3段階） | `/security-scan` |
 | auto-test | テスト自動検知・実行 | `/auto-test` |
 
 ### Security Extension Skills（5種）
 
-`security-audit` が自動的に呼び出して精度を向上させるスキル。
+`security-scan` が自動的に呼び出して精度を向上させるスキル。
 
 | スキル | 連携フェーズ | 効果 |
 |--------|------------|------|
@@ -82,7 +82,7 @@ claude
 ## アンインストール
 
 ```bash
-rm -rf ~/.claude/skills/{super-plan,rapid-build,quality-rules,pre-check,security-audit,auto-test,audit-context-building,insecure-defaults,sharp-edges,semgrep,codeql}
+rm -rf ~/.claude/skills/{super-plan,rapid-build,quality-rules,pre-check,security-scan,auto-test,audit-context-building,insecure-defaults,sharp-edges,semgrep,codeql}
 ```
 
 ---
