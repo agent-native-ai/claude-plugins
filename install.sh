@@ -10,7 +10,7 @@ DEST="$HOME/.claude/skills"
 TMP=$(mktemp -d)
 
 # 全11スキル（コア6 + セキュリティ連携5）
-SKILLS="super-plan rapid-build quality-rules pre-check security-audit auto-test audit-context-building insecure-defaults sharp-edges semgrep codeql"
+SKILLS="super-plan rapid-build quality-rules pre-check security-scan auto-test audit-context-building insecure-defaults sharp-edges semgrep codeql"
 
 echo "📦 Agent Native Skills をインストール中..."
 echo ""
@@ -22,7 +22,7 @@ mkdir -p "$DEST"
 core_count=0
 sec_count=0
 
-for name in super-plan rapid-build quality-rules pre-check security-audit auto-test; do
+for name in super-plan rapid-build quality-rules pre-check security-scan auto-test; do
   dir="$TMP/claude-plugins-$BRANCH/plugins/$name/skills/$name"
   if [ -d "$dir" ] && [ -f "$dir/SKILL.md" ]; then
     rm -rf "$DEST/$name"
